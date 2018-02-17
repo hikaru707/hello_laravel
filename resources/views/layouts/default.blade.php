@@ -1,26 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>@yield('title', 'Sample')</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <title>@yield('title', 'Sample App') - Laravel 入门教程</title>
+    <link rel="stylesheet" href="/css/app.css">
   </head>
   <body>
-      <header class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container">
-          <div class="col-md-offset-1 col-md-10">
-            <a href="/" id="logo">Sample App</a>
-            <nav>
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ route('help') }}">幫助</a></li>
-                <li><a href="#">登入</a></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-  
-      <div class="container">
+    @include('layouts._header')
+
+    <div class="container">
+      <div class="col-md-offset-1 col-md-10">
         @yield('content')
-      </div>    
-    </body>
+        @include('layouts._footer')
+      </div>
+    </div>
+  </body>
 </html>
