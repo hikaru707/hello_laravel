@@ -24,8 +24,8 @@ class SessionsController extends Controller
         } else {
             //登入失敗
             session()->flash('danger','很抱歉，帳號密碼輸入錯誤。');
+            return redirect()->back();
         }
-        return;
     }
 
     public function destory() {
