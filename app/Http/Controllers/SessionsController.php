@@ -25,8 +25,14 @@ class SessionsController extends Controller
 
         if (Auth::attempt($credentials,$request->has('remember'))) {
             // 登入成功
-            session()->flash('success','歡迎回來！');
-            return redirect()->route('users.show',[Auth::user()]);
+            if (Auth::user()->activated) {
+                session()->flash('success','歡迎回來！');
+                return redirect()->route('users.show',[Auth::user()]);
+            } else {
+                Auth::logout();
+                session()->flash('warning','您尚未驗證email，請至註冊信箱進行驗證。');
+                return redirect('/');
+            }
         } else {
             //登入失敗
             session()->flash('danger','很抱歉，帳號密碼輸入錯誤。');

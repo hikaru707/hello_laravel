@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\User;
+use Mail;
 
 class UsersController extends Controller
 {
     public function __construct() {
         $this->middleware('auth',[
-            'expect' => ['show','create','store','index']   //除了這幾個function其他都要經過middleware
+            'expect' => ['show','create','store','index','confirmEmail']   //除了這幾個function其他都要經過middleware
         ]);
 
         $this->middleware('guest', [
@@ -31,6 +32,11 @@ class UsersController extends Controller
         return view('users.show',compact('user'));
     }
 
+    public function edit(User $user) {
+        $this->authorize('update', $user);
+        return view('users.edit',compact('user'));
+    }
+
     public function store(Request $request) {
         $this->validate($request,[
             'name' => 'required|max:50',
@@ -44,14 +50,9 @@ class UsersController extends Controller
             'password' => bcrypt($request->password),
         ]);
         
-        Auth::login($user);
-        session()->flash('success', '歡迎，您將在這裡開啟一段新的旅程~');
-        return redirect()->route('users.show', [$user]);
-    }
-
-    public function edit(User $user) {
-        $this->authorize('update', $user);
-        return view('users.edit',compact('user'));
+        $this->sendEmailConfirmationTo($user);
+        session()->flash('success', '註冊驗證信已發到您的信箱，請至信箱查收。');
+        return redirect('/');
     }
 
     public function update(User $user, Request $request) {
@@ -80,5 +81,29 @@ class UsersController extends Controller
         $user->delete();
         session()->flash('success','成功刪除用戶！');
         return back();
+    }
+
+    public function confirmEmail($token) {
+        $user = User::where('activation_token',$token)->firstOrFail();
+        $user->activated = true;
+        $user->activation_token = null;
+        $user->save();
+
+        Auth::login($user);
+        session()->flash('success','帳號驗證成功！');
+        return redrect()->route('users.show',$user->id);
+    }
+
+    protected function sendEmailConfirmationTo($user) {
+        $view = 'emails.confirm';
+        $data = compact('user');
+        $from = 'abc@email.com';
+        $name = 'admin';
+        $to = $user->email;
+        $subject = '感謝註冊Sample網站，請驗證您的信箱。';
+
+        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject){
+            $message->from($from, $name)->to($to)->subject($subject);
+        });
     }
 }
