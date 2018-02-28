@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function statuses() {
+        return $this->hasMany(Status::class);
+    }
+
     //Class完成初始化之後執行
     public static function boot() {
         parent::boot();
