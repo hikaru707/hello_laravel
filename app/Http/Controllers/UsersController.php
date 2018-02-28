@@ -12,6 +12,10 @@ class UsersController extends Controller
         $this->middleware('auth',[
             'expect' => ['show','create','store']   //除了這幾個function其他都要經過middleware
         ]);
+
+        $this->middleware('guest', [
+            'only' => ['create']    //只有未登入可以看到註冊頁
+        ]);
     }
 
     public function create() {
@@ -47,7 +51,7 @@ class UsersController extends Controller
 
     public function update(User $user, Request $request) {
         $this->authorize('update', $user);
-        
+
         $this->validate($request,[
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'

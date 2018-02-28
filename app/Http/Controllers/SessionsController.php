@@ -7,6 +7,12 @@ use Auth;
 
 class SessionsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('guest',[
+            'only' => ['create']    //只有未登入狀態下可以看到登入頁
+        ]);
+    }
+
     public function create() {
         return view('sessions.create');
     }
