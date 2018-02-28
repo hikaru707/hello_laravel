@@ -10,12 +10,17 @@ class UsersController extends Controller
 {
     public function __construct() {
         $this->middleware('auth',[
-            'expect' => ['show','create','store']   //除了這幾個function其他都要經過middleware
+            'expect' => ['show','create','store','index']   //除了這幾個function其他都要經過middleware
         ]);
 
         $this->middleware('guest', [
             'only' => ['create']    //只有未登入可以看到註冊頁
         ]);
+    }
+
+    public function index() {
+        $users = User::all();
+        return view('users.index',compact('users'));
     }
 
     public function create() {
