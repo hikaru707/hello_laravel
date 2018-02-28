@@ -8,6 +8,12 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth',[
+            'expect' => ['show','create','store']
+        ]);
+    }
+
     public function create() {
         return view('users.create');
     }
