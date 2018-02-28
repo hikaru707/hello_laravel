@@ -12,7 +12,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a href="{{ route('users.show', Auth::user()->id) }}">個人中心</a></li>
-                <li><a href="#">編輯資料</a></li>
+                <li><a href="{{ route('users.edit', Auth::user()->id) }}">編輯資料</a></li>
                 <li class="divider"></li>
                 <li>
                   <a id="logout" href="#">
