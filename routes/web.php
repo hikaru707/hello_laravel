@@ -24,3 +24,8 @@ Route::delete('logout',['as' => 'logout', 'uses' => 'SessionsController@destory'
 
 Route::get('signup',['as' => 'signup','uses' =>'UsersController@create']);
 Route::get('signup/confirm/{token}',['as' => 'confirm_email', 'uses' => 'UsersController@confirmEmail']);
+
+Route::get('pasword/reset',['as' => 'password.request', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
+Route::post('password/email',['as' => 'password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
+Route::get('password/reset/{token}',['as' => 'password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
+Route::post('password/reset',['as' => 'password.update', 'uses' => 'Auth\ResetPasswordController@reset']);
