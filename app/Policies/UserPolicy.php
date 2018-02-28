@@ -20,6 +20,12 @@ class UserPolicy
     }
 
     public function update(User $currentUser, User $user) {
+        //只可以更新當前用戶的資訊
         return $currentUser->id === $user->id;
+    }
+
+    public function destroy(User $currentUser, User $user) {
+        //只有管理員且刪除對象不是自己時才可以刪除
+        return $currentUser->is_admin && $currentUser->id !== $user->id;
     }
 }
