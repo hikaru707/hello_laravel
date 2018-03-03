@@ -23,4 +23,11 @@ class StatusesController extends Controller
         ]);
         return redirect()->back();
     }
+
+    public function destory(Status $suatus) {
+        $this->authorize('destory', $status);
+        $status->delete();
+        session()->flash('success', '動態已成功刪除！');
+        return redirect()->back();
+    }
 }
