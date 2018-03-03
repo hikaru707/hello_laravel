@@ -1,7 +1,8 @@
-
 // Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
-$navbar-color: #3c3e42; 
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+$navbar-color: #3c3e42;
+
 /* universal */
 
 body {
@@ -66,7 +67,6 @@ p {
     color: #fff;
   }
 }
-
 #logout {
   cursor: default;
   &:hover {
@@ -75,6 +75,7 @@ p {
 }
 
 /* footer */
+
 footer {
   margin-top: 45px;
   padding-top: 5px;
@@ -114,7 +115,9 @@ footer {
   }
 }
 
+
 /* sidebar */
+
 aside {
   section {
     padding: 10px 0;
@@ -153,7 +156,6 @@ section.user_info {
   max-width: 50px;
   border-radius: 50%;
 }
-
 .stats {
   overflow: auto;
   margin-top: 0;
@@ -205,6 +207,7 @@ section.user_info {
 }
 
 /* forms */
+
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   margin-bottom: 15px;
@@ -216,9 +219,10 @@ input {
 
 .panel {
   margin-top: 50px;
-} 
+}
 
 /* Users edit */
+
 .gravatar_edit {
   margin: 15px auto;
   text-align: center;
@@ -229,6 +233,7 @@ input {
 }
 
 /* Users index */
+
 .users {
   list-style: none;
   margin: 0;
@@ -240,7 +245,14 @@ input {
   }
 }
 
+.delete-btn {
+  float: right;
+  position: relative;
+  right: 0;
+}
+
 /* statuses */
+
 .statuses {
   list-style: none;
   padding: 0;
@@ -291,4 +303,3 @@ aside {
 .status_form {
   margin-top: 20px;
 }
-
